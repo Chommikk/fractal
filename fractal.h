@@ -12,7 +12,11 @@
 
 #ifndef FRACTAL_H
 # define FRACTAL_H
-
+#include <mlx.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <limits.h>
+#include <stdlib.h>
 typedef struct s_data
 {
 	void	*window;
@@ -28,7 +32,10 @@ typedef struct s_image
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	void	*window;
+	void	*sesion;
 }	t_image;
 
+int	algorithm2(t_data *data, float *z, float *c);
 
 #endif
