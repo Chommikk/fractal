@@ -7,6 +7,7 @@
 
 
 //z_{n+1} = z_n * z_n + c;
+/*
 void	algorithm(t_data *data, float *z, float *c)
 {
 	float	x;
@@ -27,7 +28,7 @@ void	algorithm(t_data *data, float *z, float *c)
 		z[1] = 2 * y * x + c[1];
 	}
 }
-
+*/
 /*
 void fuckjulia(t_data *data, float* c)
 {
@@ -105,6 +106,10 @@ void	rendering_madelbrot(t_data *data)
 				colour = 0x746dd7; //purple
 			else if (colour < 1000 - 3) 
 				colour = 0x165ACD; //blue
+			else if (colour < 1000 - 2) 
+				colour = 0x165ACD; //blue
+			else if (colour < 1000 - 1) 
+				colour = 0x165ACD; //blue
 			else
 				colour = 0xB74054; //read
 
@@ -166,6 +171,7 @@ int scaling(int key, void *param)
 int	ft_exit(int keypress, void *param)
 {
 	t_data *data;
+	printf("%p,\n", param);
 	data = param;
 	if (keypress == 65307)
 		exit(0);
@@ -206,12 +212,12 @@ void madelbrot()
 		data->scale = 1.0f;
 	//mlx_hook(data->window, 17, 2L << 1, ft_exit, data); 
 	mlx_hook(data->window, 17, 1L << 2, ft_exit1, NULL); 
-	mlx_hook(data->window, 2, 1L << 0, ft_exit, NULL); 
+//	mlx_hook(data->window, 2, 1L << 0, ft_exit, NULL); 
 	printf("%p, data\n", data);
-	mlx_hook(data->window, 4, 1L << 2, scaling, &data); 
+//	mlx_hook(data->window, 4, 1L << 2, scaling, &data); 
 //	mlx_hook(data->window, 17, 2L << 1, ft_exit, data); 
 	//mlx_mouse_hook(data->window, *scaling, data);
-	//mlx_key_hook(data->window, *ft_exit , data);
+	mlx_key_hook(data->window, *ft_exit , data);
 	//rendering_madelbrot(data);
 	mlx_loop_hook(data->sesion, update, data);
 	mlx_loop(data->sesion);
