@@ -18,8 +18,17 @@ typedef struct s_data
 	void	*window;
 	void	*sesion;
 	float	scale;
-	int		colour;
 }	t_data;
+
+typedef struct s_image
+{
+	void	*img;
+	char	*addr;
+	float	scale;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_image;
 
 
 #endif

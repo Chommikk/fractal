@@ -28,6 +28,7 @@ void	algorithm(t_data *data, float *z, float *c)
 	}
 }
 
+/*
 void fuckjulia(t_data *data, float* c)
 {
 	float	z[2];
@@ -52,7 +53,7 @@ void fuckjulia(t_data *data, float* c)
 		x ++;
 	}
 }
-
+*/
 int	algorithm2(t_data *data, float *z, float *c)
 {
 	float	x[2];
@@ -93,8 +94,8 @@ void	rendering_madelbrot(t_data *data)
 		j = 0;
 		while(j < 1000)
 		{
-			c[0] = (j - 500.0) / 250.0;
-			c[1] = (i - 500.0) / 250.0;
+			c[0] = (j - 500.0) / (50.0 * data->scale);
+			c[1] = (i - 500.0) / (50.0 * data->scale);
 
 			colour = algorithm2(data, z, c);
 			//printf("co7our = %i\n",colour);
@@ -114,11 +115,11 @@ void	rendering_madelbrot(t_data *data)
 	}
 }
 
-void	rendering_julia(t_data *data, float *z)
+void	rendering_julia(t_data *data, float *c)
 {
 	int	i;
 	int	j;
-	float	c[2];
+	float	z[2];
 	int		colour;
 
 	i = 0;
@@ -127,8 +128,8 @@ void	rendering_julia(t_data *data, float *z)
 		j = 0;
 		while(j < 1000)
 		{
-			c[0] = (j - 500.0) / 250.0;
-			c[1] = (i - 500.0) / 250.0;
+			z[0] = (j - 500.0) / 250.0;
+			z[1] = (i - 500.0) / 250.0;
 
 			colour = algorithm2(data, c, z);
 			//printf("co7our = %i\n",colour);
@@ -148,38 +149,72 @@ void	rendering_julia(t_data *data, float *z)
 	}
 }
 
-int scaling(int key, t_data *data)
+int scaling(int key, void *param)
 {
+	printf("%p,param\n", param);
+	t_data *data = (t_data *) param;
 	if (key == 4)
-		data->scale = 1;
+	//	printf("a\n");
+		data->scale ++;
 	if (key == 5)
-		data->scale = 2;
+	//	printf("b\n");
+		data->scale --;
+	printf("%p,\n", &data->scale);
 	return (1);
 }
 
 int	ft_exit(int keypress, void *param)
 {
-	param = NULL;
+	t_data *data;
+	data = param;
 	if (keypress == 65307)
 		exit(0);
+
+	else if (keypress == 65451)
+		data->scale ++;
+	else if (keypress == 65453)
+	{
+		data->scale --;
+		if (data ->scale == 0)
+			data->scale = 1;
+	}
+	else
+		printf("%i\n", keypress);
 	return (0);
 }
+int update(void *param)
+{
+//	printf("\n%f\n", data->scale);
+//	printf("%p", &data->scale);
+	rendering_madelbrot(param);
+	return (1);
+}
 
+int ft_exit1()
+{
+	exit(1);
+}
 void madelbrot()
 {
-	t_data	data;
+	t_data	data[1];
 	float	c[2];
 
 	c[0] = 0;
 	c[1] = 0;
-	data.sesion = mlx_init();
-	data.window = mlx_new_window(data.sesion, 1000, 1000, "playground");
-//	data.scale = 1;
-	mlx_mouse_hook(data.window, *scaling, &data);
-	mlx_key_hook(data.window, *ft_exit , &data);
-	rendering_madelbrot(&data);
-//	rendering_julia(&data, c);
-	mlx_loop(data.sesion);
+	data->sesion = mlx_init();
+	data->window = mlx_new_window(data->sesion, 1000, 1000, "playground");
+		data->scale = 1.0f;
+	//mlx_hook(data->window, 17, 2L << 1, ft_exit, data); 
+	mlx_hook(data->window, 17, 1L << 2, ft_exit1, NULL); 
+	mlx_hook(data->window, 2, 1L << 0, ft_exit, NULL); 
+	printf("%p, data\n", data);
+	mlx_hook(data->window, 4, 1L << 2, scaling, &data); 
+//	mlx_hook(data->window, 17, 2L << 1, ft_exit, data); 
+	//mlx_mouse_hook(data->window, *scaling, data);
+	//mlx_key_hook(data->window, *ft_exit , data);
+	//rendering_madelbrot(data);
+	mlx_loop_hook(data->sesion, update, data);
+	mlx_loop(data->sesion);
 }
 
 void julia()
@@ -202,13 +237,15 @@ void julia()
 	if (i == -1)
 		exit(1);
 //	c[1] = atof(str);
+	exit(1);
+}
 
 int main()
 {
 	char	str[1024];
 	int		i;
 	
-	write(1, "Type 1 for julia\n Type 2 for mandelbrot\n", 42);
+	write(1, "Type 1 for julia\nType 2 for mandelbrot\n", 40);
 	while(1)
 	{
 		i = read(1, str, 1024);
