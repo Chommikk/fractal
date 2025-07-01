@@ -154,7 +154,7 @@ void	rendering_julia(t_data *data, float *c)
 	}
 }
 
-int scaling(int key, void *param)
+int scaling(int key, int x, int y, void *param)
 {
 	printf("%p,param\n", param);
 	t_data *data = (t_data *) param;
@@ -216,8 +216,8 @@ void madelbrot()
 	printf("%p, data\n", data);
 //	mlx_hook(data->window, 4, 1L << 2, scaling, &data); 
 //	mlx_hook(data->window, 17, 2L << 1, ft_exit, data); 
-	//mlx_mouse_hook(data->window, *scaling, data);
 	mlx_key_hook(data->window, *ft_exit , data);
+	mlx_mouse_hook(data->window, *scaling, data);
 	//rendering_madelbrot(data);
 	mlx_loop_hook(data->sesion, update, data);
 	mlx_loop(data->sesion);

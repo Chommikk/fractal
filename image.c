@@ -53,7 +53,9 @@ void	rendering_madelbrot_image(t_image*data)
 			c[1] = (i - 500.0) / (50.0 * data->scale);
 
 			colour = algorithm22(z, c);
-			//printf("co7our = %i\n",colour);
+			//printf("co7our = %i\n",0colour);
+			colour = colour * (1658);
+			/*
 			if (colour == 0)
 				colour = 0xDBB658; //oragne
 			else if (colour < 1000 - 20) 
@@ -64,6 +66,7 @@ void	rendering_madelbrot_image(t_image*data)
 				colour = 0x165ACD; //blue
 			else
 				colour = 0xB74054; //read
+			*/
 			my_mlx_pixel_put(data, j, i, colour);
 			j ++;
 		}
@@ -86,7 +89,11 @@ int	ft_exit(int keypress, void *param)
 	t_image*data;
 	data = param;
 	if (keypress == 65307)
+	{
+		mlx_destroy_image(data->sesion, data->img);
+		mlx_destroy_window(data->sesion, data->window);
 		exit(0);
+	}
 
 	else if (keypress == 65451)
 	{
@@ -135,6 +142,7 @@ int main()
 
 
 	mlx_hook(img.window, 17, 1L << 2, ft_exit1, &img); 
+	mlx_hook(img.window, 2, 1L << 0, ft_exit, &img); 
 	mlx_hook(img.window, 2, 1L << 0, ft_exit, &img); 
 
 	mlx_loop_hook(img.sesion, update, &img);
