@@ -56,6 +56,8 @@ void	rendering_madelbrot_image(t_image*data)
 			//printf("co7our = %i\n",colour);
 			if (colour == 0)
 				colour = 0xDBB658; //oragne
+			else if (colour < 1000 - 20) 
+				colour = 0xcedc3f; //lime
 			else if (colour < 1000 - 4) 
 				colour = 0x746dd7; //purple
 			else if (colour < 1000 - 3) 
@@ -87,7 +89,9 @@ int	ft_exit(int keypress, void *param)
 		exit(0);
 
 	else if (keypress == 65451)
+	{
 		data->scale ++;
+	}
 	else if (keypress == 65453)
 	{
 		data->scale --;
@@ -133,5 +137,6 @@ int main()
 	mlx_hook(img.window, 17, 1L << 2, ft_exit1, &img); 
 	mlx_hook(img.window, 2, 1L << 0, ft_exit, &img); 
 
+	mlx_loop_hook(img.sesion, update, &img);
 	mlx_loop(img.sesion);
 }
