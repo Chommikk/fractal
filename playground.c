@@ -7,54 +7,6 @@
 
 
 //z_{n+1} = z_n * z_n + c;
-/*
-void	algorithm(t_data *data, float *z, float *c)
-{
-	float	x;
-	float	y;
-	int		i;
-	i = 100;
-
-	while(i --)
-	{
-		if (z[0] >= 2 || z[0] <= -2)
-			return;
-		if (c[1] >= 2 || c[1] <= -2)
-			return;
-		mlx_pixel_put(data->sesion, data->window, 500 + (z[0] * 200) , 500 + (z[1]* 200) , data->colour);
-		x = z[0];
-		y = z[1];
-		z[0] = x * x  - y * y+ c[0];
-		z[1] = 2 * y * x + c[1];
-	}
-}
-*/
-/*
-void fuckjulia(t_data *data, float* c)
-{
-	float	z[2];
-	int		x;
-	int		y;
-	float	scale;
-
-	scale = data->scale * 20 / 500;
-
-	x = 0;
-	while (x < 50)
-	{
-		y = 0;
-		while (y < 50)
-		{
-			z[0] = (1 / 2.0) * scale;
-			z[1] = (1 / 2.0) * scale;
-			data->colour = 255 * 255 * 255 - 50 *y;
-			algorithm(data, z, c);
-			y ++;
-		}
-		x ++;
-	}
-}
-*/
 int	algorithm2(t_data *data, float *z, float *c)
 {
 	float	x[2];

@@ -54,19 +54,19 @@ void	rendering_madelbrot_image(t_image*data)
 
 			colour = algorithm22(z, c);
 			//printf("co7our = %i\n",0colour);
-			colour = colour * (1658);
-			/*
+			//colour = colour * (1658);
+			
 			if (colour == 0)
 				colour = 0xDBB658; //oragne
-			else if (colour < 1000 - 20) 
+			else if (colour < 1000 - 50) 
 				colour = 0xcedc3f; //lime
-			else if (colour < 1000 - 4) 
+			else if (colour < 1000 - 20) 
 				colour = 0x746dd7; //purple
-			else if (colour < 1000 - 3) 
+			else if (colour < 1000 - 5) 
 				colour = 0x165ACD; //blue
 			else
 				colour = 0xB74054; //read
-			*/
+			
 			my_mlx_pixel_put(data, j, i, colour);
 			j ++;
 		}
@@ -115,6 +115,25 @@ int ft_exit1()
 	exit(1);
 }
 
+int scaling(int key, int x, int y, void *param)
+{
+	int i;
+
+	i = x;
+	i = y;
+
+	printf("%p,param\n", param);
+	t_image *data = (t_image*) param;
+	if (key == 4)
+	//	printf("a\n");
+		data->scale ++;
+	if (key == 5)
+	//	printf("b\n");
+		data->scale --;
+	printf("%p,\n", &data->scale);
+	return (i);
+}
+
 int update(void *param)
 {
 
@@ -143,8 +162,9 @@ int main()
 
 	mlx_hook(img.window, 17, 1L << 2, ft_exit1, &img); 
 	mlx_hook(img.window, 2, 1L << 0, ft_exit, &img); 
-	mlx_hook(img.window, 2, 1L << 0, ft_exit, &img); 
+//	mlx_hook(img.window, 2, 1L << 0, ft_exit, &img); 
 
+	mlx_mouse_hook(img.window, *scaling, &img);
 	mlx_loop_hook(img.sesion, update, &img);
 	mlx_loop(img.sesion);
 }
