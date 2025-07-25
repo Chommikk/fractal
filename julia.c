@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandelbrot.c                                       :+:      :+:    :+:   */
+/*   julia.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mchoma <mchoma@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/25 11:15:21 by mchoma            #+#    #+#             */
-/*   Updated: 2025/07/25 11:15:22 by mchoma           ###   ########.fr       */
+/*   Created: 2025/07/25 15:30:32 by mchoma            #+#    #+#             */
+/*   Updated: 2025/07/25 15:30:33 by mchoma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractal.h"
 
-void	rendering_madelbrot_image(t_image*data)
+void	rendering_julia_image(t_image*data, float *c)
 {
 	int	i;
 	int	j;
-	float	c[2];
 	float	z[2];
 	int		colour;
 
-	z[0] = 0;
-	z[1] = 0;
 	i = 0;
 	while(i < 1000)
 	{
 		j = 0;
 		while(j < 1000)
 		{
-			c[0] = (j - 500.0) / (50.0 * data->scale);
-			c[1] = (i - 500.0) / (50.0 * data->scale);
+			z[0] = (j - 500.0) / (50.0 * data->scale);
+			z[1] = (i - 500.0) / (50.0 * data->scale);
 
 			colour = algorithm(z, c);
 			if (colour == 0)
@@ -50,47 +47,73 @@ void	rendering_madelbrot_image(t_image*data)
 	}
 }
 
-int loop(void *param)
+
+float get_real(void)
 {
-	t_image *img;
-	
-	img = param;
-	rendering_madelbrot_image(img);
-	img->scale ++;
-	return (1);
+	char	str[1024];
+	ssize_t	i;
+	float	tmp;
+
+	write(1, "type value the real part of c in format A/B use whole numbers othervise it is undefined behaviour\n", 98);
+	i = read(1, str, 1024);
+	if (i == 0)
+		exit(0);
+	if (i == -1)
+		exit(1);
+	str[i] = 0;
+	tmp = aatof(str);
+	write(1, "B=\n", 3);
+	i = read(1, str, 1024);
+	if (i == 0)
+		exit(0);
+	if (i == -1)
+		exit(1);
+	tmp = tmp  / aatof(str);
+	printf("real  == %f\n", tmp);
+	return (tmp);
 }
 
-int update(void *param)
+float get_imaginary(void)
+{
+	char	str[1024];
+	ssize_t	i;
+	float	tmp;
+	float	tmp2;
+
+	write(1, "type value the imaginary part of c in format A/B use whole numbers othervise it is undefined behaviour\n", 103);
+	i = read(1, str, 1024);
+	if (i == 0)
+		exit(0);
+	if (i == -1)
+		exit(1);
+	str[i] = 0;
+	tmp = aatof(str);
+	write(1, "B=\n", 3);
+	i = read(1, str, 1024);
+	if (i == 0)
+		exit(0);
+	if (i == -1)
+		exit(1);
+	tmp = tmp  / aatof(str);
+	return (tmp);
+}
+
+
+int updatej(void *param)
 {
 	t_image *img;
 
 	img = param;
-	rendering_madelbrot_image(img);
+	rendering_julia_image(img, img->c);
 	mlx_put_image_to_window(img->sesion, img->window, img->img, 0, 0);
 	return (1);
 }
 
-int scaling(int key, int x, int y, void *param)
-{
-	int i;
-
-	i = x;
-	i = y;
-	t_image *data = (t_image*) param;
-	if (key == 4)
-		data->scale ++;
-	if (key == 5)
-	{
-		if (data->scale)
-			data->scale --;
-	}
-	return (i);
-}
-
-void	madelbrot(void)
+void	help(float *c)
 {
 	t_image	img;
 
+	img.c = c;
 	img.sesion = mlx_init();
 	img.window = mlx_new_window(img.sesion, 1000, 1000, "hello");
 	img.img = mlx_new_image(img.sesion, 1000, 1000);
@@ -101,6 +124,18 @@ void	madelbrot(void)
 	mlx_hook(img.window, 2, 1L << 0, ft_exit, &img); 
 //	mlx_hook(img.window, 2, 1L << 0, ft_exit, &img); 
 	mlx_mouse_hook(img.window, *scaling, &img);
-	mlx_loop_hook(img.sesion, update, &img);
+	mlx_loop_hook(img.sesion, updatej, &img);
 	mlx_loop(img.sesion);
+}
+
+void julia()
+{
+	char str[1024];
+	int		i;
+	float	c[2];
+	
+	c[0] = get_real();
+	c[1] = get_imaginary();
+	help(c);
+	exit(1);
 }

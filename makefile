@@ -5,7 +5,8 @@ LDFLAGS = $(MLX_LDFLAGS) -lmlx -lXext -lX11
 NAME = fractal
 SRCS = main.c\
 	   mandelbrot.c\
-	   utils.c
+	   utils.c\
+	   julia.c
 TEST = playground.c
 OBJS = $(SRCS:.c=.o)
 NIX = shell.nix

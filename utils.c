@@ -9,7 +9,6 @@
 /*   Updated: 2025/07/25 11:17:36 by mchoma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "fractal.h"
 
 void	my_mlx_pixel_put(t_image*data, int x, int y, int colour)
@@ -30,15 +29,46 @@ int	ft_exit(int keypress, void *param)
 	{
 		mlx_destroy_image(data->sesion, data->img);
 		mlx_destroy_window(data->sesion, data->window);
+		mlx_destroy_display(data->sesion);
 		free(data->sesion);
 		exit(0);
 	}
 	return (0);
 }
 
-int ft_exit1()
+
+int	algorithm(float *z, float *c)
 {
-	exit(1);
+	float	x[2];
+	float	y[2];
+	int		i;
+
+	i = 1000;
+	y[0] = z[0];
+	y[1] = z[1];
+	while(i --)
+	{
+		if (y[0] >= 2 || y[0] <= -2)
+			return(i);
+		if (y[1] >= 2 || y[1] <= -2)
+			return(i);
+		x[0] = y[0];
+		x[1] = y[1];
+		y[0] = x[0] * x[0]  - x[1] * x[1]+ c[0];
+		y[1] = 2 * x[1] * x[0] + c[1];
+	}
+	return (0);
+}
+int ft_exit1(void *param)
+{
+	t_image*data;
+
+	data = param;
+	mlx_destroy_image(data->sesion, data->img);
+	mlx_destroy_window(data->sesion, data->window);
+	mlx_destroy_display(data->sesion);
+	free(data->sesion);
+	exit(0);
 }
 
 float	aatof(char *str)

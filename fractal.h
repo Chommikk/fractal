@@ -35,13 +35,17 @@ typedef struct s_image
 	int		endian;
 	void	*window;
 	void	*sesion;
+	float	*c;
 }	t_image;
 
+void julia();
 int	algorithm2(t_data *data, float *z, float *c);
 void	my_mlx_pixel_put(t_image*data, int x, int y, int colour);
 float	aatof(char *str);
+int	algorithm(float *z, float *c);
+int scaling(int key, int x, int y, void *param);
 
-int ft_exit1();
+int ft_exit1(void *param);
 int	ft_exit(int keypress, void *param);
 void	madelbrot(void);
 
