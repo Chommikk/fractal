@@ -14,17 +14,16 @@
 
 float get_real(void)
 {
-	char	str[1024];
+	char	*str;
 	ssize_t	i;
 	float	tmp;
 
-	write(1, "type value the real part of c in format A/B use whole numbers othervise it is undefined behaviour\n", 98);
+	write(1, "type value the real part of c in format A/B use whole numbers othervise it is undefined behaviour\n", 104);
 	i = read(1, str, 1024);
 	if (i == 0)
 		exit(0);
 	if (i == -1)
 		exit(1);
-	str[i] = 0;
 	tmp = aatof(str);
 	write(1, "B=\n", 3);
 	i = read(1, str, 1024);
@@ -39,18 +38,17 @@ float get_real(void)
 
 float get_imaginary(void)
 {
-	char	str[1024];
+	char	*str;
 	ssize_t	i;
 	float	tmp;
 	float	tmp2;
 
-	write(1, "type value the imaginary part of c in format A/B use whole numbers othervise it is undefined behaviour\n", 103);
+	write(1, "type value the imaginary part of c in format A/B use whole numbers othervise it is undefined behaviour\n", 104);
 	i = read(1, str, 1024);
 	if (i == 0)
 		exit(0);
 	if (i == -1)
 		exit(1);
-	str[i] = 0;
 	tmp = aatof(str);
 	write(1, "B=\n", 3);
 	i = read(1, str, 1024);

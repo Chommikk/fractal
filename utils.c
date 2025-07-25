@@ -40,3 +40,22 @@ int ft_exit1()
 {
 	exit(1);
 }
+
+float	aatof(char *str)
+{
+	size_t	i;
+	float	nbr;
+	float	porn;
+	
+	porn = 1.0;
+	i = 0;
+	nbr = 0.0;
+	if (str[i] == '-')
+		porn = -1.0;
+	while (str[i] <= '9' && str[i] >= '0')
+	{
+		nbr = nbr * 10 + str[i] - '0';
+		i ++;
+	}
+	return (nbr);
+}

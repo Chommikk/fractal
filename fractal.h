@@ -39,6 +39,7 @@ typedef struct s_image
 
 int	algorithm2(t_data *data, float *z, float *c);
 void	my_mlx_pixel_put(t_image*data, int x, int y, int colour);
+float	aatof(char *str);
 
 int ft_exit1();
 int	ft_exit(int keypress, void *param);

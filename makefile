@@ -3,7 +3,9 @@ CFLAGS = -Wall -Wextra $(MLX_CFLAGS)
 LDFLAGS = $(MLX_LDFLAGS) -lmlx -lXext -lX11
 
 NAME = fractal
-SRCS = image.c
+SRCS = main.c\
+	   mandelbrot.c\
+	   utils.c
 TEST = playground.c
 OBJS = $(SRCS:.c=.o)
 NIX = shell.nix
