@@ -17,6 +17,7 @@
 #include <stdio.h>
 #include <limits.h>
 #include <stdlib.h>
+		
 typedef struct s_data
 {
 	void	*window;
@@ -37,5 +38,10 @@ typedef struct s_image
 }	t_image;
 
 int	algorithm2(t_data *data, float *z, float *c);
+void	my_mlx_pixel_put(t_image*data, int x, int y, int colour);
+
+int ft_exit1();
+int	ft_exit(int keypress, void *param);
+void	madelbrot(void);
 
 #endif

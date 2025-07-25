@@ -120,14 +120,15 @@ int scaling(int key, int x, int y, void *param)
 	return (1);
 }
 
+
 int	ft_exit(int keypress, void *param)
 {
 	t_data *data;
+
 	printf("%p,\n", param);
 	data = param;
 	if (keypress == 65307)
 		exit(0);
-
 	else if (keypress == 65451)
 		data->scale ++;
 	else if (keypress == 65453)
