@@ -6,7 +6,8 @@ NAME = fractal
 SRCS = main.c\
 	   mandelbrot.c\
 	   utils.c\
-	   julia.c
+	   julia.c\
+	   gettingnumbers.c
 TEST = playground.c
 OBJS = $(SRCS:.c=.o)
 NIX = shell.nix

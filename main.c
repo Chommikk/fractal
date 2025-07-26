@@ -11,15 +11,13 @@
 /* ************************************************************************** */
 #include "fractal.h"
 
-
-
-int main()
+int	main(void)
 {
 	char	str[1024];
 	int		i;
-	
+
 	write(1, "Type 1 for julia\nType 2 for mandelbrot\n", 40);
-	while(1)
+	while (1)
 	{
 		i = read(1, str, 1024);
 		if (i == 0)

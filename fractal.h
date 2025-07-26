@@ -44,9 +44,11 @@ void	my_mlx_pixel_put(t_image*data, int x, int y, int colour);
 float	aatof(char *str);
 int	algorithm(float *z, float *c);
 int scaling(int key, int x, int y, void *param);
-
+float	get_real(void);
+float	get_imaginary(void);
 int ft_exit1(void *param);
 int	ft_exit(int keypress, void *param);
 void	madelbrot(void);
+int	colouring(int colour);
 
 #endif
